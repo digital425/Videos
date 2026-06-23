@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Acne Relief Serum</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -24,37 +23,77 @@
     overflow: hidden;
   }
 
+  /* ── CSS Keyframes ── */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes riseIn {
+    from { opacity: 0; transform: translate(-50%, calc(-50% + 50px)); }
+    to   { opacity: 1; transform: translate(-50%, -50%); }
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateX(-50%) translateY(24px); }
+    to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+  }
+  @keyframes chipLeft {
+    from { opacity: 0; transform: translateX(-28px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes chipRight {
+    from { opacity: 0; transform: translateX(28px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes expandWidth {
+    from { width: 0; }
+    to   { width: 860px; }
+  }
+  @keyframes benefitUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translate(-50%, -50%); }
+    50%       { transform: translate(-50%, calc(-50% - 10px)); }
+  }
+
   /* ── Background decorative circles ── */
   .bg-circle {
     position: absolute;
     border-radius: 50%;
-    opacity: 0;
+    animation: fadeIn 1.8s ease-out forwards;
   }
   .bg-circle-1 {
     width: 700px; height: 700px;
     top: -180px; right: -180px;
     background: radial-gradient(circle, rgba(176,224,210,0.35) 0%, rgba(176,224,210,0) 70%);
+    animation-delay: 0s;
   }
   .bg-circle-2 {
     width: 500px; height: 500px;
     bottom: -120px; left: -120px;
     background: radial-gradient(circle, rgba(173,216,230,0.3) 0%, rgba(173,216,230,0) 70%);
+    animation-delay: 0.2s;
+    opacity: 0; animation-fill-mode: forwards;
   }
   .bg-circle-3 {
     width: 300px; height: 300px;
     top: 200px; left: 60px;
     background: radial-gradient(circle, rgba(144,238,200,0.2) 0%, rgba(144,238,200,0) 70%);
+    animation-delay: 0.4s;
+    opacity: 0; animation-fill-mode: forwards;
   }
 
   /* ── Thin grid lines ── */
   .grid-lines {
     position: absolute;
     inset: 0;
-    opacity: 0;
     background-image:
       linear-gradient(rgba(100,180,160,0.08) 1px, transparent 1px),
       linear-gradient(90deg, rgba(100,180,160,0.08) 1px, transparent 1px);
     background-size: 60px 60px;
+    opacity: 0;
+    animation: fadeIn 2s 0.3s ease-out forwards;
   }
 
   /* ── Bottle wrapper ── */
@@ -65,6 +104,9 @@
     transform: translate(-50%, -50%);
     width: 220px;
     opacity: 0;
+    animation:
+      riseIn 1.4s 0.8s cubic-bezier(0.16,1,0.3,1) forwards,
+      float   3s  2.2s ease-in-out infinite;
   }
 
   /* ── SVG bottle ── */
@@ -103,22 +145,13 @@
     text-transform: uppercase;
   }
 
-  .ing-tea   { top: 180px; left: 80px; }
-  .ing-sal   { top: 490px; left: 60px; }
-  .ing-aloe  { top: 335px; right: 75px; }
+  .ing-tea   { top: 180px; left: 80px;  animation: chipLeft  0.8s 1.6s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+  .ing-sal   { top: 490px; left: 60px;  animation: chipLeft  0.8s 1.9s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+  .ing-aloe  { top: 335px; right: 75px; animation: chipRight 0.8s 2.1s cubic-bezier(0.34,1.56,0.64,1) forwards; }
 
   .ing-tea   .ingredient-icon { background: #d4f0e4; }
   .ing-sal   .ingredient-icon { background: #d4e8f5; }
   .ing-aloe  .ingredient-icon { background: #dff5ea; }
-
-  /* ── Connector lines ── */
-  .connector {
-    position: absolute;
-    background: linear-gradient(90deg, rgba(100,200,170,0.5), rgba(100,200,170,0.1));
-    height: 1px;
-    transform-origin: left center;
-    opacity: 0;
-  }
 
   /* ── Brand / headline ── */
   .brand-name {
@@ -132,16 +165,19 @@
     color: #5aaa8a;
     text-transform: uppercase;
     opacity: 0;
+    animation: fadeIn 1s 0.6s ease-out forwards;
+    white-space: nowrap;
   }
 
   .headline {
     position: absolute;
     bottom: 260px;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%) translateY(24px);
     text-align: center;
     opacity: 0;
     width: 700px;
+    animation: slideUp 1s 1.8s ease-out forwards;
   }
   .headline h1 {
     font-size: 54px;
@@ -169,7 +205,6 @@
     transform: translateX(-50%);
     display: flex;
     gap: 0;
-    opacity: 0;
     width: 860px;
   }
   .benefit {
@@ -196,6 +231,10 @@
     text-transform: uppercase;
   }
 
+  #b1 { animation: benefitUp 0.6s 2.4s ease-out forwards; }
+  #b2 { animation: benefitUp 0.6s 2.6s ease-out forwards; }
+  #b3 { animation: benefitUp 0.6s 2.8s ease-out forwards; }
+
   /* ── Bottom rule ── */
   .bottom-rule {
     position: absolute;
@@ -205,6 +244,7 @@
     width: 0;
     height: 1px;
     background: linear-gradient(90deg, transparent, rgba(90,170,138,0.4), transparent);
+    animation: expandWidth 1s 2.2s ease-in-out forwards;
   }
 
   /* ── Floating dots ── */
@@ -213,7 +253,13 @@
     border-radius: 50%;
     background: rgba(90,170,138,0.2);
     opacity: 0;
+    animation: fadeIn 1s ease-out forwards;
   }
+  .dot:nth-child(1) { animation-delay: 0.5s; }
+  .dot:nth-child(2) { animation-delay: 0.65s; }
+  .dot:nth-child(3) { animation-delay: 0.8s; }
+  .dot:nth-child(4) { animation-delay: 0.95s; }
+  .dot:nth-child(5) { animation-delay: 1.1s; }
 </style>
 </head>
 <body>
@@ -239,39 +285,30 @@
   <div class="bottle-wrap" id="bottle">
     <svg class="bottle-svg" viewBox="0 0 220 520" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <!-- Main bottle gradient -->
         <linearGradient id="bottleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
           <stop offset="0%"   stop-color="#c8e8e0" stop-opacity="0.95"/>
           <stop offset="30%"  stop-color="#f4fcfa" stop-opacity="1"/>
           <stop offset="65%"  stop-color="#e8f6f2" stop-opacity="1"/>
           <stop offset="100%" stop-color="#b8d8d2" stop-opacity="0.9"/>
         </linearGradient>
-        <!-- Cap gradient -->
         <linearGradient id="capGrad" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%"   stop-color="#d4ece8"/>
           <stop offset="50%"  stop-color="#f8fffe"/>
           <stop offset="100%" stop-color="#a8ccc8"/>
         </linearGradient>
-        <!-- Dropper gradient -->
         <linearGradient id="dropperGrad" x1="0%" y1="0%" x2="100%" y2="0%">
           <stop offset="0%"   stop-color="#a0c8c4"/>
           <stop offset="50%"  stop-color="#e8f8f4"/>
           <stop offset="100%" stop-color="#90b8b4"/>
         </linearGradient>
-        <!-- Shine -->
         <linearGradient id="shineGrad" x1="0%" y1="0%" x2="0%" y2="100%">
           <stop offset="0%"   stop-color="white" stop-opacity="0.6"/>
           <stop offset="100%" stop-color="white" stop-opacity="0"/>
         </linearGradient>
-        <!-- Label gradient -->
         <linearGradient id="labelGrad" x1="0%" y1="0%" x2="0%" y2="100%">
           <stop offset="0%"   stop-color="rgba(255,255,255,0.9)"/>
           <stop offset="100%" stop-color="rgba(220,245,238,0.85)"/>
         </linearGradient>
-        <filter id="glow">
-          <feGaussianBlur stdDeviation="3" result="blur"/>
-          <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-        </filter>
       </defs>
 
       <!-- Dropper tip -->
@@ -281,22 +318,18 @@
       <!-- Neck collar -->
       <rect x="84" y="46" width="52" height="18" rx="5" fill="url(#capGrad)"/>
       <rect x="84" y="46" width="52" height="4" rx="2" fill="white" opacity="0.5"/>
-      <!-- Collar ring lines -->
       <line x1="84" y1="54" x2="136" y2="54" stroke="rgba(90,160,150,0.3)" stroke-width="1"/>
       <line x1="84" y1="58" x2="136" y2="58" stroke="rgba(90,160,150,0.2)" stroke-width="0.5"/>
 
       <!-- Bottle shoulder -->
-      <path d="M 60 100 Q 58 65 84 64 L 136 64 Q 162 65 160 100 Z"
-            fill="url(#bottleGrad)"/>
+      <path d="M 60 100 Q 58 65 84 64 L 136 64 Q 162 65 160 100 Z" fill="url(#bottleGrad)"/>
 
       <!-- Bottle body -->
       <rect x="58" y="98" width="104" height="360" rx="18" fill="url(#bottleGrad)"/>
 
       <!-- Side reflections -->
-      <rect x="58" y="98" width="12" height="360" rx="6"
-            fill="url(#shineGrad)" opacity="0.3"/>
-      <rect x="150" y="98" width="12" height="360" rx="6"
-            fill="url(#shineGrad)" opacity="0.15"/>
+      <rect x="58" y="98" width="12" height="360" rx="6" fill="url(#shineGrad)" opacity="0.3"/>
+      <rect x="150" y="98" width="12" height="360" rx="6" fill="url(#shineGrad)" opacity="0.15"/>
 
       <!-- Label area -->
       <rect x="70" y="130" width="80" height="260" rx="10"
@@ -306,11 +339,9 @@
       <!-- Label: brand line -->
       <text x="110" y="158" font-family="Helvetica Neue, sans-serif"
             font-size="6" font-weight="600" letter-spacing="2.5"
-            fill="#5aaa8a" text-anchor="middle" text-rendering="geometricPrecision">DERMA LUXE</text>
+            fill="#5aaa8a" text-anchor="middle">DERMA LUXE</text>
 
-      <!-- Label: thin rule -->
-      <line x1="82" y1="163" x2="138" y2="163"
-            stroke="rgba(90,170,138,0.4)" stroke-width="0.5"/>
+      <line x1="82" y1="163" x2="138" y2="163" stroke="rgba(90,170,138,0.4)" stroke-width="0.5"/>
 
       <!-- Label: Product name -->
       <text x="110" y="184" font-family="Helvetica Neue, sans-serif"
@@ -320,30 +351,21 @@
             font-size="10.5" font-weight="700" letter-spacing="1.5"
             fill="#1a5c44" text-anchor="middle">SERUM</text>
 
-      <!-- Label: thin rule -->
-      <line x1="82" y1="205" x2="138" y2="205"
-            stroke="rgba(90,170,138,0.25)" stroke-width="0.5"/>
+      <line x1="82" y1="205" x2="138" y2="205" stroke="rgba(90,170,138,0.25)" stroke-width="0.5"/>
 
-      <!-- Label: key ingredients icons row -->
-      <!-- Tea tree leaf icon -->
-      <ellipse cx="95" cy="230" rx="7" ry="11" fill="rgba(90,200,150,0.3)"
-               transform="rotate(-20,95,230)"/>
+      <!-- Ingredient icons -->
+      <ellipse cx="95" cy="230" rx="7" ry="11" fill="rgba(90,200,150,0.3)" transform="rotate(-20,95,230)"/>
       <line x1="95" y1="221" x2="95" y2="241" stroke="rgba(40,120,80,0.4)" stroke-width="0.8"/>
-      <!-- Aloe icon -->
-      <ellipse cx="110" cy="229" rx="5" ry="12" fill="rgba(144,230,180,0.35)"
-               transform="rotate(5,110,229)"/>
+      <ellipse cx="110" cy="229" rx="5" ry="12" fill="rgba(144,230,180,0.35)" transform="rotate(5,110,229)"/>
       <line x1="110" y1="219" x2="110" y2="241" stroke="rgba(40,120,80,0.35)" stroke-width="0.8"/>
-      <!-- Salicylic hex icon -->
       <polygon points="125,220 131,224 131,232 125,236 119,232 119,224"
                fill="none" stroke="rgba(90,170,200,0.5)" stroke-width="1"/>
       <text x="125" y="231" font-family="Helvetica Neue" font-size="5"
             fill="rgba(40,100,140,0.7)" text-anchor="middle">SA</text>
 
-      <!-- Label: thin rule -->
-      <line x1="82" y1="245" x2="138" y2="245"
-            stroke="rgba(90,170,138,0.2)" stroke-width="0.5"/>
+      <line x1="82" y1="245" x2="138" y2="245" stroke="rgba(90,170,138,0.2)" stroke-width="0.5"/>
 
-      <!-- Label: percentages / formula -->
+      <!-- Formula -->
       <text x="110" y="262" font-family="Helvetica Neue, sans-serif"
             font-size="7" font-weight="300" letter-spacing="1"
             fill="#4a8070" text-anchor="middle">2% SALICYLIC ACID</text>
@@ -351,18 +373,16 @@
             font-size="7" font-weight="300" letter-spacing="1"
             fill="#4a8070" text-anchor="middle">TEA TREE  ·  ALOE VERA</text>
 
-      <!-- Label: Net vol -->
+      <!-- Net vol -->
       <text x="110" y="350" font-family="Helvetica Neue, sans-serif"
             font-size="6.5" font-weight="300" letter-spacing="1.5"
             fill="#6a9090" text-anchor="middle">30 ML / 1.0 FL.OZ</text>
 
-      <!-- Bottom bottle curve / base -->
-      <path d="M 58 458 Q 58 480 110 480 Q 162 480 162 458 Z"
-            fill="rgba(140,200,190,0.35)"/>
+      <!-- Base -->
+      <path d="M 58 458 Q 58 480 110 480 Q 162 480 162 458 Z" fill="rgba(140,200,190,0.35)"/>
 
-      <!-- Frosted glass sheen across body -->
-      <rect x="68" y="100" width="30" height="355" rx="8"
-            fill="white" opacity="0.06"/>
+      <!-- Frosted glass sheen -->
+      <rect x="68" y="100" width="30" height="355" rx="8" fill="white" opacity="0.06"/>
     </svg>
   </div>
 
@@ -389,10 +409,10 @@
   </div>
 
   <!-- Bottom rule -->
-  <div class="bottom-rule" id="bottomRule"></div>
+  <div class="bottom-rule"></div>
 
   <!-- Benefits -->
-  <div class="benefits" id="benefits">
+  <div class="benefits">
     <div class="benefit" id="b1">
       <div class="benefit-num">01</div>
       <div class="benefit-text">Clears Blemishes</div>
@@ -408,70 +428,5 @@
   </div>
 
 </div>
-
-<script>
-const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-
-// Background elements
-tl.to(".bg-circle-1", { opacity: 1, duration: 1.8, ease: "power2.out" }, 0)
-  .to(".bg-circle-2", { opacity: 1, duration: 1.8, ease: "power2.out" }, 0.2)
-  .to(".bg-circle-3", { opacity: 1, duration: 1.8, ease: "power2.out" }, 0.4)
-  .to(".grid-lines",  { opacity: 1, duration: 2, ease: "power1.out" }, 0.3)
-
-// Floating dots
-  .to(".dot", { opacity: 1, duration: 1, stagger: 0.15, ease: "power2.out" }, 0.5)
-
-// Brand name
-  .to(".brand-name", { opacity: 1, y: 0, duration: 1, ease: "power2.out" }, 0.6)
-
-// Bottle rises in
-  .fromTo("#bottle",
-    { opacity: 0, y: 60 },
-    { opacity: 1, y: 0, duration: 1.4, ease: "power3.out" },
-    0.8)
-
-// Ingredient chips fan out
-  .to(".ing-tea",  { opacity: 1, x: 0, duration: 0.8, ease: "back.out(1.4)" }, 1.6)
-  .to(".ing-sal",  { opacity: 1, x: 0, duration: 0.8, ease: "back.out(1.4)" }, 1.9)
-  .to(".ing-aloe", { opacity: 1, x: 0, duration: 0.8, ease: "back.out(1.4)" }, 2.1)
-
-// Headline
-  .fromTo("#headline",
-    { opacity: 0, y: 20 },
-    { opacity: 1, y: 0, duration: 1, ease: "power2.out" },
-    1.8)
-
-// Bottom rule expands
-  .to("#bottomRule", { width: "860px", duration: 1, ease: "power2.inOut" }, 2.2)
-
-// Benefits stagger
-  .to("#b1", { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, 2.4)
-  .to("#b2", { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, 2.6)
-  .to("#b3", { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, 2.8)
-
-// Benefits container opacity
-  .to("#benefits", { opacity: 1, duration: 0.1 }, 2.35);
-
-// Gentle float on the bottle
-gsap.to("#bottle", {
-  y: -10,
-  duration: 3,
-  ease: "sine.inOut",
-  yoyo: true,
-  repeat: -1,
-  delay: 2.2
-});
-
-// Subtle ingredient pulse
-gsap.to(".ingredient", {
-  boxShadow: "0 6px 32px rgba(80,160,140,0.22)",
-  duration: 2.5,
-  ease: "sine.inOut",
-  yoyo: true,
-  repeat: -1,
-  stagger: 0.5,
-  delay: 3
-});
-</script>
 </body>
 </html>
