@@ -1,266 +1,390 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Acne Relief Serum</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: #000; display: flex; align-items: center; justify-content: center; width: 1080px; height: 1080px; overflow: hidden; }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1080px;
+        height: 1080px;
+        overflow: hidden;
+        background: #000;
+      }
+      :root {
+        --bg: #f0f7f4;
+        --fg: #152820;
+        --accent: #3d8f6e;
+        --accent-blue: #6aaec8;
+        --accent-lt: rgba(61,143,110,0.12);
+        --blue-lt: rgba(106,174,200,0.12);
+        --muted: #7a9e8e;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="6"
+      data-width="1080"
+      data-height="1080"
+      style="position:relative;width:1080px;height:1080px;overflow:hidden;font-family:'Oswald',sans-serif;"
+    >
 
-    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Inter:wght@300;400;500&display=swap');
-  </style>
-</head>
-<body>
+      <!-- Full-bleed background (on child, not root) -->
+      <div style="position:absolute;inset:0;background:var(--bg);"></div>
 
-<div
-  data-composition-id="acne-relief-serum"
-  data-duration="6"
-  data-width="1080"
-  data-height="1080"
-  style="width:1080px;height:1080px;position:relative;overflow:hidden;font-family:'Inter',sans-serif;"
->
-
-  <!-- Background -->
-  <div style="position:absolute;inset:0;background:linear-gradient(145deg,#f0f8ff 0%,#e8f5f0 35%,#f8fdff 65%,#e6f4f1 100%);"></div>
-
-  <!-- Subtle grid texture -->
-  <div style="position:absolute;inset:0;opacity:0.03;background-image:repeating-linear-gradient(0deg,#1a5c7a 0px,transparent 1px,transparent 40px),repeating-linear-gradient(90deg,#1a5c7a 0px,transparent 1px,transparent 40px);"></div>
-
-  <!-- Top botanical accent bar -->
-  <div class="clip" data-in="0" data-out="6" data-track-index="1"
-    style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#a8d5b5,#5ba4cf,#7ec8a4,#5ba4cf,#a8d5b5);">
-  </div>
-
-  <!-- Floating botanical circles — background layer -->
-  <div class="clip" data-in="0.2" data-out="6" data-track-index="2" id="circle-tl"
-    style="position:absolute;top:-60px;left:-60px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(168,213,181,0.3) 0%,transparent 70%);"></div>
-
-  <div class="clip" data-in="0.3" data-out="6" data-track-index="2" id="circle-br"
-    style="position:absolute;bottom:-80px;right:-80px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(91,164,207,0.2) 0%,transparent 70%);"></div>
-
-  <div class="clip" data-in="0.4" data-out="6" data-track-index="2" id="circle-tr"
-    style="position:absolute;top:80px;right:40px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(126,200,164,0.25) 0%,transparent 70%);"></div>
-
-  <!-- Left botanical illustration panel -->
-  <div class="clip" data-in="0.5" data-out="6" data-track-index="3" id="botanicals-panel"
-    style="position:absolute;left:60px;top:50%;transform:translateY(-50%);width:200px;display:flex;flex-direction:column;gap:32px;align-items:center;">
-
-    <!-- Tea Tree leaf SVG -->
-    <div id="tea-tree" style="text-align:center;">
-      <svg width="80" height="90" viewBox="0 0 80 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M40 85 C40 85 10 55 10 35 C10 18 23 8 40 8 C57 8 70 18 70 35 C70 55 40 85 40 85Z" fill="rgba(126,200,164,0.35)" stroke="#5ba48c" stroke-width="1.5"/>
-        <path d="M40 85 L40 20" stroke="#5ba48c" stroke-width="1.5"/>
-        <path d="M40 60 C30 52 18 50 18 50" stroke="#5ba48c" stroke-width="1" opacity="0.7"/>
-        <path d="M40 60 C50 52 62 50 62 50" stroke="#5ba48c" stroke-width="1" opacity="0.7"/>
-        <path d="M40 45 C30 37 22 36 22 36" stroke="#5ba48c" stroke-width="1" opacity="0.7"/>
-        <path d="M40 45 C50 37 58 36 58 36" stroke="#5ba48c" stroke-width="1" opacity="0.7"/>
+      <!-- Hex grid texture -->
+      <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.045;" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="hex" x="0" y="0" width="60" height="69.28" patternUnits="userSpaceOnUse">
+            <polygon points="30,1 58,16.5 58,52.8 30,68.3 2,52.8 2,16.5"
+              fill="none" stroke="#3d8f6e" stroke-width="1.2"/>
+          </pattern>
+        </defs>
+        <rect width="1080" height="1080" fill="url(#hex)"/>
       </svg>
-      <div style="font-family:'Inter',sans-serif;font-size:10px;font-weight:400;color:#5ba48c;letter-spacing:2px;text-transform:uppercase;margin-top:6px;">Tea Tree</div>
-    </div>
 
-    <!-- Aloe Vera SVG -->
-    <div id="aloe" style="text-align:center;">
-      <svg width="80" height="90" viewBox="0 0 80 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M40 85 C35 70 25 50 20 30 C17 18 24 10 32 14 C38 17 40 30 40 30 C40 30 42 17 48 14 C56 10 63 18 60 30 C55 50 45 70 40 85Z" fill="rgba(168,213,181,0.4)" stroke="#5ba48c" stroke-width="1.5"/>
-        <path d="M40 85 L40 30" stroke="#5ba48c" stroke-width="1.2"/>
-        <path d="M28 55 C20 48 14 45 14 45" stroke="#5ba48c" stroke-width="1" opacity="0.6"/>
-        <path d="M52 55 C60 48 66 45 66 45" stroke="#5ba48c" stroke-width="1" opacity="0.6"/>
-      </svg>
-      <div style="font-family:'Inter',sans-serif;font-size:10px;font-weight:400;color:#5ba48c;letter-spacing:2px;text-transform:uppercase;margin-top:6px;">Aloe Vera</div>
-    </div>
+      <!-- Top-right radial glow -->
+      <div style="position:absolute;top:-160px;right:-120px;width:600px;height:600px;border-radius:50%;
+        background:radial-gradient(circle,rgba(61,143,110,0.22) 0%,transparent 68%);pointer-events:none;"></div>
 
-    <!-- Salicylic crystal SVG -->
-    <div id="salicylic" style="text-align:center;">
-      <svg width="80" height="70" viewBox="0 0 80 70" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <polygon points="40,5 65,20 65,50 40,65 15,50 15,20" fill="rgba(91,164,207,0.25)" stroke="#5ba4cf" stroke-width="1.5"/>
-        <polygon points="40,18 55,27 55,43 40,52 25,43 25,27" fill="rgba(91,164,207,0.15)" stroke="#5ba4cf" stroke-width="1"/>
-        <line x1="40" y1="5" x2="40" y2="65" stroke="#5ba4cf" stroke-width="0.8" opacity="0.5"/>
-        <line x1="15" y1="20" x2="65" y2="50" stroke="#5ba4cf" stroke-width="0.8" opacity="0.5"/>
-        <line x1="65" y1="20" x2="15" y2="50" stroke="#5ba4cf" stroke-width="0.8" opacity="0.5"/>
-      </svg>
-      <div style="font-family:'Inter',sans-serif;font-size:10px;font-weight:400;color:#5ba4cf;letter-spacing:2px;text-transform:uppercase;margin-top:6px;">Salicylic</div>
-    </div>
-  </div>
+      <!-- Bottom-left radial glow -->
+      <div style="position:absolute;bottom:-100px;left:-80px;width:480px;height:480px;border-radius:50%;
+        background:radial-gradient(circle,rgba(106,174,200,0.18) 0%,transparent 68%);pointer-events:none;"></div>
 
-  <!-- Center serum bottle -->
-  <div class="clip" data-in="0.8" data-out="6" data-track-index="4" id="bottle-wrap"
-    style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:180px;">
-
-    <svg width="180" height="400" viewBox="0 0 180 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- Dropper cap -->
-      <rect x="72" y="10" width="36" height="14" rx="4" fill="#d4ecf7" stroke="#5ba4cf" stroke-width="1.5"/>
-      <rect x="82" y="5" width="16" height="12" rx="3" fill="#e8f5fc" stroke="#5ba4cf" stroke-width="1.2"/>
-      <circle cx="90" cy="4" r="3" fill="#5ba4cf"/>
-
-      <!-- Neck -->
-      <path d="M78 24 L68 55 L112 55 L102 24Z" fill="url(#neckGrad)" stroke="#b8dff0" stroke-width="1"/>
-
-      <!-- Main bottle body -->
-      <path d="M60 55 Q55 60 54 80 L54 320 Q54 340 90 342 Q126 340 126 320 L126 80 Q125 60 120 55Z"
-        fill="url(#bodyGrad)" stroke="#a8d8ea" stroke-width="1.5"/>
-
-      <!-- Glass highlight left -->
-      <path d="M66 75 Q62 100 62 180 Q62 240 65 290" stroke="rgba(255,255,255,0.7)" stroke-width="3" stroke-linecap="round" fill="none"/>
-
-      <!-- Glass highlight right subtle -->
-      <path d="M114 80 Q116 130 116 200" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round" fill="none"/>
-
-      <!-- Label area -->
-      <rect x="62" y="120" width="56" height="140" rx="4" fill="rgba(255,255,255,0.55)" stroke="rgba(91,164,207,0.3)" stroke-width="1"/>
-
-      <!-- Label brand mark -->
-      <text x="90" y="148" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a4a6b" letter-spacing="3" font-weight="300">ELEMENT</text>
-      <line x1="68" y1="153" x2="112" y2="153" stroke="#5ba4cf" stroke-width="0.5" opacity="0.6"/>
-
-      <!-- Label product name -->
-      <text x="90" y="172" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="13" fill="#1a3a55" font-weight="600">Acne</text>
-      <text x="90" y="187" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="13" fill="#1a3a55" font-weight="600">Relief</text>
-      <text x="90" y="202" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="13" fill="#1a3a55" font-weight="600">Serum</text>
-
-      <line x1="68" y1="210" x2="112" y2="210" stroke="#5ba4cf" stroke-width="0.5" opacity="0.6"/>
-
-      <!-- Volume -->
-      <text x="90" y="228" text-anchor="middle" font-family="'Inter',sans-serif" font-size="8" fill="#5ba48c" letter-spacing="1" font-weight="300">30 ML / 1 FL OZ</text>
-
-      <!-- Bottom reflection -->
-      <ellipse cx="90" cy="336" rx="32" ry="5" fill="rgba(91,164,207,0.12)"/>
-
-      <!-- Gradients -->
-      <defs>
-        <linearGradient id="bodyGrad" x1="54" y1="0" x2="126" y2="0" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stop-color="#cceeff"/>
-          <stop offset="30%" stop-color="#e8f7fd"/>
-          <stop offset="60%" stop-color="#f5fbff"/>
-          <stop offset="100%" stop-color="#d4ecf7"/>
-        </linearGradient>
-        <linearGradient id="neckGrad" x1="68" y1="0" x2="112" y2="0" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stop-color="#b8dff0"/>
-          <stop offset="50%" stop-color="#e0f3fc"/>
-          <stop offset="100%" stop-color="#b8dff0"/>
-        </linearGradient>
-      </defs>
-    </svg>
-  </div>
-
-  <!-- Right side — main typography -->
-  <div class="clip" data-in="1" data-out="6" data-track-index="5" id="text-panel"
-    style="position:absolute;right:60px;top:50%;transform:translateY(-50%);width:320px;">
-
-    <!-- Eyebrow -->
-    <div id="eyebrow" style="font-family:'Inter',sans-serif;font-size:10px;font-weight:400;color:#5ba4cf;letter-spacing:4px;text-transform:uppercase;margin-bottom:16px;">
-      Advanced Formula
-    </div>
-
-    <!-- Main headline -->
-    <div id="headline" style="font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.1;color:#0d2d42;margin-bottom:8px;">
-      Acne
-    </div>
-    <div id="headline2" style="font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:600;line-height:1.1;color:#1a5c7a;margin-bottom:8px;">
-      Relief
-    </div>
-    <div id="headline3" style="font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1.1;color:#0d2d42;margin-bottom:24px;">
-      Serum
-    </div>
-
-    <!-- Divider -->
-    <div id="divider" style="width:48px;height:1.5px;background:linear-gradient(90deg,#5ba4cf,#7ec8a4);margin-bottom:28px;"></div>
-
-    <!-- Benefits list -->
-    <div id="benefits" style="display:flex;flex-direction:column;gap:16px;margin-bottom:36px;">
-
-      <div class="benefit-item" style="display:flex;align-items:center;gap:12px;">
-        <div style="width:28px;height:28px;border-radius:50%;background:rgba(91,164,207,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7 L5.5 10.5 L12 3.5" stroke="#5ba4cf" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div style="font-family:'Inter',sans-serif;font-size:14px;font-weight:400;color:#2a4a5e;letter-spacing:0.5px;">Clears Blemishes</div>
+      <!-- Ghost "SERUM" — positioned with explicit px, no transform centering -->
+      <div id="ghost-text"
+        style="position:absolute;left:40px;top:370px;
+          font-family:'Playfair Display',serif;font-size:300px;font-weight:400;color:var(--fg);
+          opacity:0.032;letter-spacing:-8px;white-space:nowrap;pointer-events:none;user-select:none;">
+        SERUM
       </div>
 
-      <div class="benefit-item" style="display:flex;align-items:center;gap:12px;">
-        <div style="width:28px;height:28px;border-radius:50%;background:rgba(126,200,164,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7 L5.5 10.5 L12 3.5" stroke="#7ec8a4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div style="font-family:'Inter',sans-serif;font-size:14px;font-weight:400;color:#2a4a5e;letter-spacing:0.5px;">Reduces Redness</div>
+      <!-- Registration mark top-left -->
+      <div id="reg-tl" style="position:absolute;top:28px;left:28px;width:24px;height:24px;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <line x1="0" y1="12" x2="8" y2="12" stroke="#3d8f6e" stroke-width="1"/>
+          <line x1="12" y1="0" x2="12" y2="8" stroke="#3d8f6e" stroke-width="1"/>
+          <circle cx="12" cy="12" r="3" stroke="#3d8f6e" stroke-width="1" fill="none"/>
+        </svg>
       </div>
 
-      <div class="benefit-item" style="display:flex;align-items:center;gap:12px;">
-        <div style="width:28px;height:28px;border-radius:50%;background:rgba(168,213,181,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7 L5.5 10.5 L12 3.5" stroke="#5ba48c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div style="font-family:'Inter',sans-serif;font-size:14px;font-weight:400;color:#2a4a5e;letter-spacing:0.5px;">Unclogs Pores</div>
+      <!-- Registration mark bottom-right -->
+      <div id="reg-br" style="position:absolute;bottom:28px;right:28px;width:24px;height:24px;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <line x1="16" y1="12" x2="24" y2="12" stroke="#6aaec8" stroke-width="1"/>
+          <line x1="12" y1="16" x2="12" y2="24" stroke="#6aaec8" stroke-width="1"/>
+          <circle cx="12" cy="12" r="3" stroke="#6aaec8" stroke-width="1" fill="none"/>
+        </svg>
       </div>
-    </div>
 
-    <!-- CTA tag -->
-    <div id="cta-tag" style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border:1px solid rgba(91,164,207,0.4);border-radius:2px;background:rgba(91,164,207,0.06);">
-      <div style="font-family:'Inter',sans-serif;font-size:10px;font-weight:500;color:#1a5c7a;letter-spacing:3px;text-transform:uppercase;">Dermatologist Tested</div>
-    </div>
+      <!-- Top accent bar — track 0 -->
+      <div id="top-bar" class="clip" data-start="0" data-duration="6" data-track-index="0"
+        style="position:absolute;top:0;left:0;right:0;height:3px;
+          background:linear-gradient(90deg,var(--accent-blue),var(--accent),var(--accent-blue));"></div>
 
-  </div>
+      <!-- Bottom accent bar — track 1 (separate track, avoids overlap) -->
+      <div id="bottom-bar" class="clip" data-start="0" data-duration="6" data-track-index="1"
+        style="position:absolute;bottom:0;left:0;right:0;height:3px;
+          background:linear-gradient(90deg,var(--accent),var(--accent-blue),var(--accent));"></div>
 
-  <!-- Bottom bar -->
-  <div class="clip" data-in="1.5" data-out="6" data-track-index="6" id="bottom-bar"
-    style="position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#a8d5b5,#5ba4cf,#7ec8a4,#5ba4cf,#a8d5b5);">
-  </div>
+      <!-- Left vertical rule — track 2 -->
+      <div id="rule-left" class="clip" data-start="0.4" data-duration="5.6" data-track-index="2"
+        style="position:absolute;left:300px;top:90px;bottom:90px;width:1px;
+          background:linear-gradient(180deg,transparent,var(--accent) 20%,var(--accent) 80%,transparent);
+          opacity:0.25;transform-origin:top center;"></div>
 
-  <!-- Watermark / brand footer -->
-  <div class="clip" data-in="1.5" data-out="6" data-track-index="6" id="footer"
-    style="position:absolute;bottom:28px;left:50%;transform:translateX(-50%);font-family:'Inter',sans-serif;font-size:9px;font-weight:300;color:rgba(26,92,122,0.4);letter-spacing:5px;text-transform:uppercase;white-space:nowrap;">
-    The Element · Clinical Skincare
-  </div>
+      <!-- Right vertical rule — track 3 -->
+      <div id="rule-right" class="clip" data-start="0.5" data-duration="5.5" data-track-index="3"
+        style="position:absolute;left:750px;top:90px;bottom:90px;width:1px;
+          background:linear-gradient(180deg,transparent,var(--accent-blue) 20%,var(--accent-blue) 80%,transparent);
+          opacity:0.25;transform-origin:top center;"></div>
 
-  <!-- Floating water droplets decoration -->
-  <div class="clip" data-in="0.6" data-out="6" data-track-index="7" id="drop1"
-    style="position:absolute;top:180px;right:420px;width:8px;height:11px;border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;background:rgba(91,164,207,0.3);transform:rotate(-15deg);">
-  </div>
-  <div class="clip" data-in="0.7" data-out="6" data-track-index="7" id="drop2"
-    style="position:absolute;top:260px;right:440px;width:5px;height:7px;border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;background:rgba(126,200,164,0.4);transform:rotate(10deg);">
-  </div>
-  <div class="clip" data-in="0.65" data-out="6" data-track-index="7" id="drop3"
-    style="position:absolute;bottom:340px;right:410px;width:6px;height:9px;border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;background:rgba(91,164,207,0.25);transform:rotate(-8deg);">
-  </div>
 
-</div>
+      <!-- ─── LEFT PANEL: botanicals — track 4 ─── -->
+      <!-- Positioned with explicit top px, no translateY(-50%) to avoid transform conflict -->
+      <div id="left-panel" class="clip" data-start="0.3" data-duration="5.7" data-track-index="4"
+        style="position:absolute;left:52px;top:260px;width:220px;
+          display:flex;flex-direction:column;gap:42px;align-items:flex-start;">
 
-<script>
-(function () {
-  const tl = gsap.timeline({ paused: true });
-  window.__timelines = window.__timelines || {};
-  window.__timelines["acne-relief-serum"] = tl;
+        <div id="ing-1" style="display:flex;flex-direction:column;gap:10px;">
+          <div style="width:64px;height:64px;border-radius:50%;background:var(--accent-lt);
+            border:1.5px solid rgba(61,143,110,0.3);display:flex;align-items:center;justify-content:center;">
+            <svg width="34" height="38" viewBox="0 0 34 38" fill="none">
+              <path d="M17 36 C17 36 4 23 4 13 C4 6 9.5 2 17 2 C24.5 2 30 6 30 13 C30 23 17 36 17 36Z"
+                fill="rgba(61,143,110,0.2)" stroke="#3d8f6e" stroke-width="1.3"/>
+              <line x1="17" y1="36" x2="17" y2="6" stroke="#3d8f6e" stroke-width="1.1"/>
+              <line x1="17" y1="24" x2="8" y2="18" stroke="#3d8f6e" stroke-width="0.9" opacity="0.7"/>
+              <line x1="17" y1="24" x2="26" y2="18" stroke="#3d8f6e" stroke-width="0.9" opacity="0.7"/>
+              <line x1="17" y1="16" x2="9" y2="12" stroke="#3d8f6e" stroke-width="0.8" opacity="0.6"/>
+              <line x1="17" y1="16" x2="25" y2="12" stroke="#3d8f6e" stroke-width="0.8" opacity="0.6"/>
+            </svg>
+          </div>
+          <div>
+            <div style="font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;color:var(--accent);
+              letter-spacing:3px;text-transform:uppercase;">Tea Tree</div>
+            <div style="font-family:'Oswald',sans-serif;font-size:11px;font-weight:300;color:var(--muted);
+              letter-spacing:2px;text-transform:uppercase;margin-top:3px;">Antibacterial</div>
+          </div>
+        </div>
 
-  // Background circles float in
-  tl.from("#circle-tl", { opacity: 0, scale: 0.7, duration: 1.2, ease: "power2.out" }, 0.2)
-    .from("#circle-br", { opacity: 0, scale: 0.7, duration: 1.2, ease: "power2.out" }, 0.3)
-    .from("#circle-tr", { opacity: 0, scale: 0.6, duration: 1, ease: "power2.out" }, 0.4)
+        <div id="ing-2" style="display:flex;flex-direction:column;gap:10px;">
+          <div style="width:64px;height:64px;border-radius:50%;background:var(--blue-lt);
+            border:1.5px solid rgba(106,174,200,0.3);display:flex;align-items:center;justify-content:center;">
+            <svg width="34" height="38" viewBox="0 0 34 38" fill="none">
+              <path d="M17 36 C14 28 8 18 5 10 C3 4 8 0 13 3 C16 5 17 12 17 12 C17 12 18 5 21 3 C26 0 31 4 29 10 C26 18 20 28 17 36Z"
+                fill="rgba(106,174,200,0.2)" stroke="#6aaec8" stroke-width="1.3"/>
+              <line x1="17" y1="36" x2="17" y2="12" stroke="#6aaec8" stroke-width="1.1"/>
+              <line x1="17" y1="22" x2="7" y2="17" stroke="#6aaec8" stroke-width="0.8" opacity="0.6"/>
+              <line x1="17" y1="22" x2="27" y2="17" stroke="#6aaec8" stroke-width="0.8" opacity="0.6"/>
+            </svg>
+          </div>
+          <div>
+            <div style="font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;color:var(--accent-blue);
+              letter-spacing:3px;text-transform:uppercase;">Aloe Vera</div>
+            <div style="font-family:'Oswald',sans-serif;font-size:11px;font-weight:300;color:var(--muted);
+              letter-spacing:2px;text-transform:uppercase;margin-top:3px;">Soothing</div>
+          </div>
+        </div>
 
-  // Botanicals panel slides in from left
-    .from("#botanicals-panel", { opacity: 0, x: -40, duration: 1, ease: "power3.out" }, 0.5)
-    .from("#tea-tree", { opacity: 0, y: 20, duration: 0.8, ease: "power2.out" }, 0.7)
-    .from("#aloe", { opacity: 0, y: 20, duration: 0.8, ease: "power2.out" }, 0.9)
-    .from("#salicylic", { opacity: 0, y: 20, duration: 0.8, ease: "power2.out" }, 1.1)
+        <div id="ing-3" style="display:flex;flex-direction:column;gap:10px;">
+          <div style="width:64px;height:64px;border-radius:50%;background:var(--accent-lt);
+            border:1.5px solid rgba(61,143,110,0.3);display:flex;align-items:center;justify-content:center;">
+            <svg width="36" height="34" viewBox="0 0 36 34" fill="none">
+              <polygon points="18,2 33,10 33,24 18,32 3,24 3,10"
+                fill="rgba(61,143,110,0.15)" stroke="#3d8f6e" stroke-width="1.3"/>
+              <polygon points="18,9 27,14 27,22 18,27 9,22 9,14"
+                fill="rgba(61,143,110,0.1)" stroke="#3d8f6e" stroke-width="0.8"/>
+              <line x1="18" y1="2" x2="18" y2="32" stroke="#3d8f6e" stroke-width="0.7" opacity="0.4"/>
+              <line x1="3" y1="10" x2="33" y2="24" stroke="#3d8f6e" stroke-width="0.7" opacity="0.4"/>
+              <line x1="33" y1="10" x2="3" y2="24" stroke="#3d8f6e" stroke-width="0.7" opacity="0.4"/>
+            </svg>
+          </div>
+          <div>
+            <div style="font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;color:var(--accent);
+              letter-spacing:3px;text-transform:uppercase;">Salicylic</div>
+            <div style="font-family:'Oswald',sans-serif;font-size:11px;font-weight:300;color:var(--muted);
+              letter-spacing:2px;text-transform:uppercase;margin-top:3px;">Exfoliating</div>
+          </div>
+        </div>
 
-  // Bottle rises up
-    .from("#bottle-wrap", { opacity: 0, y: 50, duration: 1.4, ease: "power3.out" }, 0.8)
+      </div>
 
-  // Text panel fades in staggered
-    .from("#eyebrow", { opacity: 0, y: 12, duration: 0.7, ease: "power2.out" }, 1.0)
-    .from("#headline", { opacity: 0, y: 18, duration: 0.6, ease: "power2.out" }, 1.15)
-    .from("#headline2", { opacity: 0, y: 18, duration: 0.6, ease: "power2.out" }, 1.3)
-    .from("#headline3", { opacity: 0, y: 18, duration: 0.6, ease: "power2.out" }, 1.45)
-    .from("#divider", { opacity: 0, scaleX: 0, transformOrigin: "left center", duration: 0.6, ease: "power2.out" }, 1.6)
-    .from(".benefit-item", { opacity: 0, x: 16, duration: 0.5, stagger: 0.15, ease: "power2.out" }, 1.75)
-    .from("#cta-tag", { opacity: 0, y: 10, duration: 0.6, ease: "power2.out" }, 2.3)
 
-  // Footer
-    .from("#footer", { opacity: 0, duration: 0.8, ease: "power2.out" }, 2.5)
+      <!-- ─── CENTER: serum bottle — track 5 ─── -->
+      <!-- Positioned with explicit px, no translate(-50%,-50%) -->
+      <div id="bottle-wrap" class="clip" data-start="0.6" data-duration="5.4" data-track-index="5"
+        style="position:absolute;left:455px;top:325px;width:170px;">
 
-  // Droplets
-    .from("#drop1,#drop2,#drop3", { opacity: 0, scale: 0, duration: 0.6, stagger: 0.1, ease: "back.out(1.5)" }, 1.2)
+        <svg width="170" height="430" viewBox="0 0 170 430" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="glassGrad" x1="45" y1="0" x2="125" y2="0" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#b8e0d0"/>
+              <stop offset="25%" stop-color="#daf0e8"/>
+              <stop offset="55%" stop-color="#f2faf7"/>
+              <stop offset="80%" stop-color="#e0f2eb"/>
+              <stop offset="100%" stop-color="#b8e0d0"/>
+            </linearGradient>
+            <linearGradient id="neckGrad" x1="62" y1="0" x2="108" y2="0" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#a8d4c4"/>
+              <stop offset="50%" stop-color="#d8ede6"/>
+              <stop offset="100%" stop-color="#a8d4c4"/>
+            </linearGradient>
+            <linearGradient id="capGrad" x1="68" y1="0" x2="102" y2="0" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#8cbfaf"/>
+              <stop offset="50%" stop-color="#b8d8d0"/>
+              <stop offset="100%" stop-color="#8cbfaf"/>
+            </linearGradient>
+          </defs>
 
-  // Gentle float on bottle after reveal
-    .to("#bottle-wrap", { y: -8, duration: 2.5, ease: "sine.inOut", yoyo: true, repeat: 1 }, 2.2);
-})();
-</script>
-</body>
+          <rect x="80" y="4" width="10" height="10" rx="5" fill="#3d8f6e"/>
+          <circle cx="85" cy="3" r="3.5" fill="#2d7558"/>
+
+          <rect x="68" y="13" width="34" height="18" rx="5" fill="url(#capGrad)" stroke="#8cbfaf" stroke-width="1"/>
+          <line x1="68" y1="21" x2="102" y2="21" stroke="#a8d4c4" stroke-width="0.7" opacity="0.6"/>
+
+          <path d="M74 31 L62 68 L108 68 L96 31Z" fill="url(#neckGrad)" stroke="#b0d4c8" stroke-width="0.8"/>
+
+          <path d="M52 68 Q46 75 45 95 L45 345 Q45 368 85 370 Q125 368 125 345 L125 95 Q124 75 118 68Z"
+            fill="url(#glassGrad)" stroke="#a8d4c4" stroke-width="1.5"/>
+
+          <path d="M60 90 Q56 130 56 210 Q56 270 59 320" stroke="rgba(255,255,255,0.75)" stroke-width="4"
+            stroke-linecap="round" fill="none"/>
+          <path d="M68 100 Q65 150 65 220 Q65 275 68 315" stroke="rgba(255,255,255,0.3)" stroke-width="2"
+            stroke-linecap="round" fill="none"/>
+
+          <rect x="55" y="130" width="60" height="160" rx="3"
+            fill="rgba(255,255,255,0.6)" stroke="rgba(61,143,110,0.25)" stroke-width="1"/>
+
+          <line x1="61" y1="145" x2="109" y2="145" stroke="#3d8f6e" stroke-width="0.8" opacity="0.5"/>
+
+          <text x="85" y="160" text-anchor="middle" font-family="'Oswald',sans-serif" font-size="8"
+            fill="#152820" letter-spacing="4" font-weight="300">ELEMENT</text>
+
+          <text x="85" y="181" text-anchor="middle" font-family="'Playfair Display',serif" font-size="12"
+            fill="#152820" font-weight="400">Acne</text>
+          <text x="85" y="197" text-anchor="middle" font-family="'Playfair Display',serif" font-size="12"
+            fill="#152820" font-weight="400">Relief</text>
+          <text x="85" y="213" text-anchor="middle" font-family="'Playfair Display',serif" font-size="12"
+            fill="#152820" font-weight="400">Serum</text>
+
+          <line x1="61" y1="221" x2="109" y2="221" stroke="#3d8f6e" stroke-width="0.8" opacity="0.5"/>
+
+          <text x="85" y="238" text-anchor="middle" font-family="'Oswald',sans-serif" font-size="7.5"
+            fill="#7a9e8e" letter-spacing="1.5" font-weight="300">30 ML · 1 FL OZ</text>
+
+          <circle cx="63" cy="262" r="2" fill="rgba(61,143,110,0.3)"/>
+          <circle cx="71" cy="258" r="1.5" fill="rgba(106,174,200,0.3)"/>
+          <circle cx="107" cy="262" r="2" fill="rgba(61,143,110,0.3)"/>
+          <line x1="63" y1="262" x2="71" y2="258" stroke="rgba(61,143,110,0.25)" stroke-width="0.8"/>
+
+          <ellipse cx="85" cy="372" rx="36" ry="5" fill="rgba(61,143,110,0.1)"/>
+        </svg>
+      </div>
+
+
+      <!-- ─── RIGHT PANEL: text — track 6 ─── -->
+      <!-- Positioned with explicit px top, no transform -->
+      <div id="right-panel" class="clip" data-start="0.8" data-duration="5.2" data-track-index="6"
+        style="position:absolute;right:52px;top:235px;width:290px;">
+
+        <div id="eyebrow"
+          style="font-family:'Oswald',sans-serif;font-size:11px;font-weight:300;color:var(--accent-blue);
+            letter-spacing:5px;text-transform:uppercase;margin-bottom:18px;">
+          Advanced Formula
+        </div>
+
+        <div id="product-name"
+          style="font-family:'Playfair Display',serif;font-size:76px;font-weight:400;
+            line-height:0.92;color:var(--fg);margin-bottom:24px;">
+          Acne<br>Relief<br><em style="color:var(--accent);">Serum</em>
+        </div>
+
+        <div id="name-rule"
+          style="width:52px;height:2px;background:var(--accent);margin-bottom:28px;transform-origin:left center;"></div>
+
+        <div id="benefits" style="display:flex;flex-direction:column;gap:14px;margin-bottom:32px;">
+
+          <div class="benefit" style="display:flex;align-items:center;gap:12px;">
+            <div style="flex-shrink:0;width:32px;height:32px;border-radius:50%;
+              background:var(--accent-lt);border:1.5px solid rgba(61,143,110,0.35);
+              display:flex;align-items:center;justify-content:center;">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M2 7L5.5 10.5L12 3" stroke="#3d8f6e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div style="font-family:'Oswald',sans-serif;font-size:18px;font-weight:400;color:var(--fg);letter-spacing:1px;">
+              Clears Blemishes
+            </div>
+          </div>
+
+          <div class="benefit" style="display:flex;align-items:center;gap:12px;">
+            <div style="flex-shrink:0;width:32px;height:32px;border-radius:50%;
+              background:var(--blue-lt);border:1.5px solid rgba(106,174,200,0.35);
+              display:flex;align-items:center;justify-content:center;">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M2 7L5.5 10.5L12 3" stroke="#6aaec8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div style="font-family:'Oswald',sans-serif;font-size:18px;font-weight:400;color:var(--fg);letter-spacing:1px;">
+              Reduces Redness
+            </div>
+          </div>
+
+          <div class="benefit" style="display:flex;align-items:center;gap:12px;">
+            <div style="flex-shrink:0;width:32px;height:32px;border-radius:50%;
+              background:var(--accent-lt);border:1.5px solid rgba(61,143,110,0.35);
+              display:flex;align-items:center;justify-content:center;">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M2 7L5.5 10.5L12 3" stroke="#3d8f6e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div style="font-family:'Oswald',sans-serif;font-size:18px;font-weight:400;color:var(--fg);letter-spacing:1px;">
+              Unclogs Pores
+            </div>
+          </div>
+
+        </div>
+
+        <div id="clinical-badge"
+          style="display:inline-flex;align-items:center;gap:8px;
+            padding:9px 18px;border:1.5px solid rgba(61,143,110,0.3);border-radius:2px;
+            background:rgba(61,143,110,0.05);">
+          <div style="width:6px;height:6px;border-radius:50%;background:var(--accent);"></div>
+          <div style="font-family:'Oswald',sans-serif;font-size:11px;font-weight:300;color:var(--accent);
+            letter-spacing:3px;text-transform:uppercase;">Dermatologist Tested</div>
+        </div>
+
+      </div>
+
+
+      <!-- ─── METADATA STRIP — track 7 ─── -->
+      <div id="meta-strip" class="clip" data-start="1.2" data-duration="4.8" data-track-index="7"
+        style="position:absolute;bottom:38px;left:52px;display:flex;align-items:center;gap:24px;">
+        <div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);
+          letter-spacing:1px;opacity:0.65;">pH 4.5</div>
+        <div style="width:1px;height:10px;background:var(--muted);opacity:0.3;"></div>
+        <div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);
+          letter-spacing:1px;opacity:0.65;">LOT: ARS-2024-06</div>
+        <div style="width:1px;height:10px;background:var(--muted);opacity:0.3;"></div>
+        <div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);
+          letter-spacing:1px;opacity:0.65;">2% BHA · 0.5% NIACINAMIDE</div>
+      </div>
+
+      <!-- ─── BRAND FOOTER — track 8 ─── -->
+      <div id="brand-footer" class="clip" data-start="1.4" data-duration="4.6" data-track-index="8"
+        style="position:absolute;bottom:36px;left:50%;margin-left:-160px;white-space:nowrap;
+          font-family:'Oswald',sans-serif;font-size:10px;font-weight:300;
+          color:var(--muted);letter-spacing:6px;text-transform:uppercase;opacity:0.5;">
+        The Element · Clinical Skincare
+      </div>
+
+    </div><!-- /root -->
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // Ghost text drift — use fromTo because no CSS transform to conflict
+      tl.fromTo("#ghost-text", { x: 0 }, { x: 20, duration: 6, ease: "sine.inOut" }, 0);
+
+      // Vertical rules draw in from top
+      tl.from("#rule-left", { scaleY: 0, duration: 1.0, ease: "power2.out" }, 0.4);
+      tl.from("#rule-right", { scaleY: 0, duration: 1.0, ease: "power2.out" }, 0.6);
+
+      // Left panel slides in
+      tl.from("#left-panel", { opacity: 0, x: -40, duration: 1.0, ease: "power3.out" }, 0.3);
+      tl.from("#ing-1", { opacity: 0, y: 20, duration: 0.6, ease: "power2.out" }, 0.5);
+      tl.from("#ing-2", { opacity: 0, y: 20, duration: 0.6, ease: "power2.out" }, 0.7);
+      tl.from("#ing-3", { opacity: 0, y: 20, duration: 0.6, ease: "power2.out" }, 0.9);
+
+      // Bottle rises — fromTo so explicit start/end, no CSS transform conflict
+      tl.fromTo("#bottle-wrap",
+        { y: 55, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.4, ease: "power3.out" }, 0.6);
+      // Gentle float loop after reveal
+      tl.to("#bottle-wrap", { y: -10, duration: 2.0, ease: "sine.inOut", yoyo: true, repeat: 1 }, 2.2);
+
+      // Right panel text
+      tl.from("#eyebrow", { opacity: 0, x: 28, duration: 0.6, ease: "power2.out" }, 0.8);
+      tl.from("#product-name", { opacity: 0, x: 28, duration: 0.8, ease: "power3.out" }, 1.0);
+      tl.from("#name-rule", { scaleX: 0, duration: 0.5, ease: "power2.out" }, 1.55);
+      tl.from(".benefit", { opacity: 0, x: 18, duration: 0.5, stagger: 0.15, ease: "power2.out" }, 1.65);
+      tl.from("#clinical-badge", { opacity: 0, y: 10, duration: 0.6, ease: "power2.out" }, 2.35);
+
+      // Metadata
+      tl.from("#meta-strip", { opacity: 0, duration: 0.8, ease: "power1.out" }, 1.8);
+      tl.from("#brand-footer", { opacity: 0, duration: 0.8, ease: "power1.out" }, 2.0);
+
+      // Registration marks
+      tl.from("#reg-tl", { opacity: 0, scale: 0.3, transformOrigin: "center", duration: 0.5, ease: "back.out(2)" }, 0.8);
+      tl.from("#reg-br", { opacity: 0, scale: 0.3, transformOrigin: "center", duration: 0.5, ease: "back.out(2)" }, 1.0);
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
 </html>
